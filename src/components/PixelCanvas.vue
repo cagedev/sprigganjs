@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <canvas
+      class="container"
       :width="this.scale * this.size_x"
       :height="this.scale * this.size_y"
       @mousedown.left="paint"
@@ -40,7 +41,7 @@ export default {
       let cy = e.offsetY;
       let rx = Math.floor(cx / this.scale);
       let ry = Math.floor(cy / this.scale);
-      this.setPixel(rx, ry, 'black');
+      this.setPixel(rx, ry, "red");
     },
     setPixel(x, y, c) {
       var canvas = document.getElementById(this.id);
@@ -48,9 +49,32 @@ export default {
       var ctx = canvas.getContext("2d");
       console.log(ctx);
       ctx.beginPath();
-      ctx.rect(20, 20, 150, 100);
-      ctx.stroke();
+      ctx.lineWidth = 0;
+      ctx.fillStyle = c;
+      ctx.rect(
+        x * this.scale + 1,
+        y * this.scale + 1,
+        this.scale - 2,
+        this.scale - 2
+      );
+      ctx.fill();
     },
+  },
+  mounted() {
+    let range = (n) => Array.from(Array(n).keys());
+    for (let i in range(this.size_x)) {
+      for (let j in range(this.size_y)) {
+        this.setPixel(i, j, "black");
+      }
+    }
   },
 };
 </script>
+
+<style>
+.container {
+  border-style: solid;
+  border-color: maroon;
+  border-width: 1px;
+}
+</style>
