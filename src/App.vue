@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <PixelCanvas :scale="10" :size_x="32" :size_y="32" id="myCanvas" />
+    <Palette :num_colors="10" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import PixelCanvas from "./components/PixelCanvas.vue";
+import Palette from "./components/Palette.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    PixelCanvas,
+    Palette,
+  },
+};
 </script>
 
 <style>
