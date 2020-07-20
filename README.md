@@ -11,6 +11,7 @@ TODO: (non-echaustive)
 [x] local image saving (screenshot-style)
 [ ] internal image model
 [ ] local image saving (thumbnail style)
+[ ] live example (gh-pages)
 [ ] post to pixie
 [ ] live connection to pixie (websocket)
 
