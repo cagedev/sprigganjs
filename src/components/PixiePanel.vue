@@ -11,6 +11,7 @@
       id="myCanvas"
       palette_id="myPalette"
       v-bind.sync="pixelcanvas_colors"
+      :imgData="image_data"
     />
     Palette: <br />
     <Palette
@@ -41,7 +42,7 @@ export default {
     Thumbnail,
   },
   props: {
-    image_data: Object,
+    // image_data: Object,
     // type: Object,
     // {
     //   type: Array,
@@ -52,14 +53,31 @@ export default {
       type: String,
       default: "RGBA",
     },
-    size_x: Number,
-    size_y: Number,
+    size_x: {
+      type: Number,
+      default: 32,
+    },
+    size_y: {
+      type: Number,
+      default: 32,
+    },
   },
   computed: {
+    image_data: function () {
+      let c = document.createElement("canvas");
+      let ctx = c.getContext("2d");
+      ctx.canvas.width = this.size_x;
+      ctx.canvas.height = this.size_y;
+      ctx.rect(10, 10, 5, 5);
+      ctx.fill();
+      return ctx.getImageData(0, 0, c.width, c.height);
+    },
     image_dataurl: function () {
       if (this.image_data) {
         let c = document.createElement("canvas");
         let ctx = c.getContext("2d");
+        ctx.canvas.width = this.size_x;
+        ctx.canvas.height = this.size_y;
         ctx.putImageData(this.image_data, 0, 0);
         return c.toDataURL("image/png");
       } else {

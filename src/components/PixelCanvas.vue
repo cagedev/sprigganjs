@@ -34,11 +34,12 @@ export default {
       default: "black",
     },
     load_mask: Boolean,
+    imgData: ImageData,
   },
-  data() {
-    return {
-      data: [],
-    };
+  watched: {
+    imgData: () =>   {
+      this.drawData();
+    },
   },
   methods: {
     paint(e, c) {
@@ -47,7 +48,47 @@ export default {
       let rx = Math.floor(cx / (this.scale + this.spacing));
       let ry = Math.floor(cy / (this.scale + this.spacing));
       // this.setPixel(rx, ry, c);
-      console.log("setPixel("+rx+","+ry+","+c+")");
+      console.log("setPixel(" + rx + "," + ry + "," + c + ")");
+    },
+    drawData() {
+      console.log('drawData() for ' + this.imgData);
+      for (let j = 0; j < this.imgData.height; j++) {
+        for (let i = 0; i < this.imgData.width; i++) {
+          let pi = (j * this.imgData.width + i) * 4;
+          let cs = "#";
+          cs = cs + this.imgData.data[pi + 0].toString(16).padStart(2, 0);
+          cs = cs + this.imgData.data[pi + 1].toString(16).padStart(2, 0);
+          cs = cs + this.imgData.data[pi + 2].toString(16).padStart(2, 0);
+          let mask =
+            "#" +
+            this.imgData.data[pi + 3].toString(16).padStart(2, 0) +
+            this.imgData.data[pi + 3].toString(16).padStart(2, 0) +
+            this.imgData.data[pi + 3].toString(16).padStart(2, 0);
+          if (this.load_mask) {
+            this.setPixel(i, j, mask);
+          } else {
+            if (this.imgData.data[pi + 3] == 255) {
+              this.drawPixel(i, j, cs);
+            } else {
+              this.drawPixel(i, j, this.bgColor);
+            }
+          }
+        }
+      }
+    },
+    drawPixel(x, y, c) {
+      var canvas = document.getElementById(this.id);
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.lineWidth = 0;
+      ctx.fillStyle = c;
+      ctx.rect(
+        x * this.scale,
+        y * this.scale,
+        this.scale - this.spacing,
+        this.scale - this.spacing
+      );
+      ctx.fill();
     },
   },
   // mounted() {
