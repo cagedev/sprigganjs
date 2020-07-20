@@ -6,14 +6,14 @@ Sprite designer frontend the [pixie](https://github.com/cagedev/pixie) LED-panel
 
 Work-in-progress:
 
-TODO: (non-echaustive)
-[x] image loading
-[x] local image saving (screenshot-style)
-[ ] internal image model
-[ ] local image saving (thumbnail style)
-[ ] live example (gh-pages)
-[ ] post to pixie
-[ ] live connection to pixie (websocket)
+### TODO:
+- [x] image loading
+- [x] local image saving (screenshot-style)
+- [ ] internal image model
+- [ ] local image saving (thumbnail style)
+- [ ] live example (gh-pages)
+- [ ] post to pixie
+- [ ] live connection to pixie (websocket)
 
 
 ## Project setup
