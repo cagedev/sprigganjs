@@ -12,6 +12,7 @@
       palette_id="myPalette"
       v-bind.sync="pixelcanvas_colors"
       :imgData="image_data"
+      v-on:draw-pixel="setPixel"
     />
     Palette: <br />
     <Palette
@@ -42,7 +43,7 @@ export default {
     Thumbnail,
   },
   props: {
-    // image_data: Object,
+    // image_data: ImageData,
     // type: Object,
     // {
     //   type: Array,
@@ -160,19 +161,10 @@ export default {
       let ry = Math.floor(cy / this.scale);
       this.setPixel(rx, ry, c);
     },
-    setPixel(x, y, c) {
-      var canvas = document.getElementById(this.id);
-      var ctx = canvas.getContext("2d");
-      ctx.beginPath();
-      ctx.lineWidth = 0;
-      ctx.fillStyle = c;
-      ctx.rect(
-        x * this.scale,
-        y * this.scale,
-        this.scale - this.spacing,
-        this.scale - this.spacing
-      );
-      ctx.fill();
+    setPixel(x, y, r, g, b) {
+      this.image_data.data[(x + y * this.image_data.width) * 4 + 0] = r;
+      this.image_data.data[(x + y * this.image_data.width) * 4 + 1] = g;
+      this.image_data.data[(x + y * this.image_data.width) * 4 + 2] = b;
     },
     setFgColor(c) {
       this.fgColor = c;
@@ -194,6 +186,8 @@ export default {
         fgColor: "#CC0001",
         bgColor: "#000000",
       },
+      local_image_data: this.image_data,
+      local_image_dataurl: this.image_dataurl,
     };
   },
 };

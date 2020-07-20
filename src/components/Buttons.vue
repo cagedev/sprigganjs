@@ -14,11 +14,6 @@
 export default {
   name: "Buttons",
   props: {},
-  data() {
-    return {
-      data: [],
-    };
-  },
   methods: {
     click_loadImage() {},
     click_saveImage() {},

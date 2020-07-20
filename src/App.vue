@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <PixiePanel :data="image_data" />
+    <PixiePanel />
   </div>
 </template>
 
@@ -17,11 +17,12 @@ export default {
     return {
       width: 32,
       height: 32,
-      image_data: {
-        width: 32,
-        height: 32,
-        data: new Uint8ClampedArray(this.width * this.height * 4),
-      },
+      image_data: new ImageData(32, 32),
+      // {
+      //   width: 32,
+      //   height: 32,
+      //   data: new Uint8ClampedArray(this.width * this.height * 4),
+      // },
       palette_colors: [
         "#CC0001",
         "#E36101",

@@ -36,8 +36,8 @@ export default {
     load_mask: Boolean,
     imgData: ImageData,
   },
-  watched: {
-    imgData: () =>   {
+  watch: {
+    imgData: () => {
       this.drawData();
     },
   },
@@ -45,13 +45,14 @@ export default {
     paint(e, c) {
       let cx = e.offsetX;
       let cy = e.offsetY;
-      let rx = Math.floor(cx / (this.scale + this.spacing));
-      let ry = Math.floor(cy / (this.scale + this.spacing));
+      let rx = Math.floor(cx / this.scale);
+      let ry = Math.floor(cy / this.scale);
       // this.setPixel(rx, ry, c);
-      console.log("setPixel(" + rx + "," + ry + "," + c + ")");
+      // console.log("setPixel(" + rx + "," + ry + "," + c + ")");
+      this.drawPixel(rx, ry, c);
     },
     drawData() {
-      console.log('drawData() for ' + this.imgData);
+      console.log("drawData() for " + this.imgData);
       for (let j = 0; j < this.imgData.height; j++) {
         for (let i = 0; i < this.imgData.width; i++) {
           let pi = (j * this.imgData.width + i) * 4;
@@ -77,6 +78,10 @@ export default {
       }
     },
     drawPixel(x, y, c) {
+      let r = parseInt(c.substring(1, 2), 16);
+      let g = parseInt(c.substring(3, 4), 16);
+      let b = parseInt(c.substring(5, 6), 16);
+      this.$emit("draw-pixel", x, y, r, g, b);
       var canvas = document.getElementById(this.id);
       var ctx = canvas.getContext("2d");
       ctx.beginPath();
