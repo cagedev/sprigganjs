@@ -1,40 +1,27 @@
 <template>
   <div id="app">
-    <PixelCanvas
-      :scale="20"
-      :spacing="1"
-      :size_x="32"
-      :size_y="32"
-      id="myCanvas"
-      palette_id="myPalette"
-      v-bind.sync="pixelcanvas_colors"
-    />
-    <Palette
-      id="myPalette"
-      v-bind:colors="pixelcanvas_colors"
-      @color-change="changeColor"
-      v-bind:palette_colors="palette_colors"
-    />
+    <PixiePanel :data="image_data" />
   </div>
 </template>
 
 <script>
-import PixelCanvas from "./components/PixelCanvas.vue";
-import Palette from "./components/Palette.vue";
+import PixiePanel from "./components/PixiePanel.vue";
 
 export default {
   name: "App",
   components: {
-    PixelCanvas,
-    Palette,
+    PixiePanel,
   },
-  methods: {
-    changeColor(brush, color) {
-      this.pixelcanvas_colors[brush] = color;
-    },
-  },
+  methods: {},
   data() {
     return {
+      width: 32,
+      height: 32,
+      image_data: {
+        width: 32,
+        height: 32,
+        data: new Uint8ClampedArray(this.width * this.height * 4),
+      },
       palette_colors: [
         "#CC0001",
         "#E36101",
@@ -60,8 +47,19 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  /* color: #2c3e50; */
   margin-top: 60px;
   display: flex;
+  background-color: brown;
+}
+
+/* debug */
+.container {
+  border-style: solid;
+  border-width: 1px;
+}
+.invisible {
+  visibility: hidden;
+  display: none;
 }
 </style>
