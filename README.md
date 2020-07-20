@@ -1,5 +1,20 @@
 # sprigganjs
 
+Sprite designer frontend the [pixie](https://github.com/cagedev/pixie) LED-panel server.
+
+## Status
+
+Work-in-progress:
+
+TODO: (non-echaustive)
+[x] image loading
+[x] local image saving (screenshot-style)
+[ ] internal image model
+[ ] local image saving (thumbnail style)
+[ ] post to pixie
+[ ] live connection to pixie (websocket)
+
+
 ## Project setup
 ```
 npm install
