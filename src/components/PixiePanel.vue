@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    Thumbnail:
-    <Thumbnail :data="image_dataurl" />
+    <!-- Thumbnail:
+    <Thumbnail :data="image_dataurl" /> -->
     PixelCanvas:<br />
-    <PixelCanvas
+    <!-- <PixelCanvas
       :scale="20"
       :spacing="1"
       :size_x="32"
@@ -11,8 +11,17 @@
       id="myCanvas"
       palette_id="myPalette"
       v-bind.sync="pixelcanvas_colors"
-      :imgData="image_data"
+      v-bind:imgData.sync="image_data"
       v-on:draw-pixel="setPixel"
+    /> -->
+    <TestCanvas
+      :width="100"
+      :height="100"
+      :draw="
+        (canvas, ctx) => {
+          ctx.putImageData(new ImageData(this.image_data, this.size_x), 0, 0);
+        }
+      "
     />
     Palette: <br />
     <Palette
@@ -27,20 +36,22 @@
 </template>
 
 <script>
-import PixelCanvas from "./PixelCanvas.vue";
+// import PixelCanvas from "./PixelCanvas.vue";
+import TestCanvas from "./TestCanvas.vue";
 import Palette from "./Palette.vue";
 import Buttons from "./Buttons.vue";
-import Thumbnail from "./Thumbnail.vue";
+// import Thumbnail from "./Thumbnail.vue";
 
 import { saveAs } from "file-saver";
 
 export default {
   name: "PixiePanel",
   components: {
-    PixelCanvas,
+    // PixelCanvas,
+    TestCanvas,
     Palette,
     Buttons,
-    Thumbnail,
+    // Thumbnail,
   },
   props: {
     // image_data: ImageData,
@@ -62,36 +73,60 @@ export default {
       type: Number,
       default: 32,
     },
+    x: {
+      type: Number,
+      default: 10,
+    },
   },
   computed: {
-    image_data: function () {
-      let c = document.createElement("canvas");
-      let ctx = c.getContext("2d");
-      ctx.canvas.width = this.size_x;
-      ctx.canvas.height = this.size_y;
-      ctx.rect(10, 10, 5, 5);
-      ctx.fill();
-      return ctx.getImageData(0, 0, c.width, c.height);
-    },
-    image_dataurl: function () {
-      if (this.image_data) {
+    image_data: {
+      get() {
         let c = document.createElement("canvas");
         let ctx = c.getContext("2d");
         ctx.canvas.width = this.size_x;
         ctx.canvas.height = this.size_y;
+        ctx.rect(1, 1, 1, 1);
+        ctx.fill();
+        return ctx.getImageData(0, 0, c.width, c.height).data;
+      },
+      set() {
+        var ctx = this.$refs.canvas.getContext("2d");
         ctx.putImageData(this.image_data, 0, 0);
-        return c.toDataURL("image/png");
-      } else {
-        return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKBJREFUeNpiYBjpgBFd4P///wJAaj0QO9DEQiAg5ID9tLIcmwMYsDgABhqoaTHMUHRxpsGYBv5TGqTIZsDkYWLo6gc8BEYdMOqAUQeMOoAqDgAWcgZAfB9EU63SIAGALH8PZb+H8v+jVz64KiOK6wIg+ADEArj4hOoCajiAqMpqtDIadcCoA0YdQIoDDtCqQ4KtBY3NAYG0csQowAYAAgwAgSqbls5coPEAAAAASUVORK5CYII=";
-      }
+      },
     },
+    // image_dataurl: function () {
+    //   if (this.image_data) {
+    //     let c = document.createElement("canvas");
+    //     let ctx = c.getContext("2d");
+    //     ctx.canvas.width = this.size_x;
+    //     ctx.canvas.height = this.size_y;
+    //     ctx.putImageData(new ImageData(this.image_data, this.size_x), 0, 0);
+    //     return c.toDataURL("image/png");
+    //   } else {
+    //     return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAKBJREFUeNpiYBjpgBFd4P///wJAaj0QO9DEQiAg5ID9tLIcmwMYsDgABhqoaTHMUHRxpsGYBv5TGqTIZsDkYWLo6gc8BEYdMOqAUQeMOoAqDgAWcgZAfB9EU63SIAGALH8PZb+H8v+jVz64KiOK6wIg+ADEArj4hOoCajiAqMpqtDIadcCoA0YdQIoDDtCqQ4KtBY3NAYG0csQowAYAAgwAgSqbls5coPEAAAAASUVORK5CYII=";
+    //   }
+    // },
   },
+  // watch: {
+  //   image_data: {
+  //     function() {
+  //       console.log("imagedata_cahnged");
+  //     },
+  //     deep: true,
+  //   },
+  // },
   methods: {
     getEmptyArray() {
       return new Array(this.size_x * this.size_y * 4).fill(128);
     },
     changeColor(brush, color) {
       this.pixelcanvas_colors[brush] = color;
+      this.image_data.data[0] = 255;
+      this.image_data.data[1] = 0;
+      this.image_data.data[2] = 0;
+      this.image_data.data[3] = 255;
+      //   console.log(this.image_data);
+      this.image_data.width = this.image_data.width + 1;
     },
     saveImage() {
       var canvas = document.getElementById(this.id);
@@ -172,6 +207,7 @@ export default {
   },
   data() {
     return {
+      image_data: null,
       palette_colors: [
         "#CC0001",
         "#E36101",

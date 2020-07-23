@@ -51,7 +51,7 @@ export default {
   /* color: #2c3e50; */
   margin-top: 60px;
   display: flex;
-  background-color: brown;
+  background-color: yellow;
 }
 
 /* debug */
