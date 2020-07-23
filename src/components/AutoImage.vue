@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <img :src="data" />
+    <img :src="dataURL" />
   </div>
 </template>
 
 <script>
 export default {
-  name: "Thumbnail",
+  name: "AutoImage",
   props: {
-    data: String,
+    dataURL: { type: String, required: true },
   },
 };
 </script>

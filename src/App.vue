@@ -1,23 +1,23 @@
 <template>
   <div id="app">
-    <PixiePanel />
+    <SprigganPanel :width="width" :height="height" />
   </div>
 </template>
 
 <script>
-import PixiePanel from "./components/PixiePanel.vue";
+import SprigganPanel from "./components/SprigganPanel.vue";
 
 export default {
   name: "App",
   components: {
-    PixiePanel,
+    SprigganPanel,
   },
   methods: {},
   data() {
     return {
       width: 32,
       height: 32,
-      image_data: new ImageData(32, 32),
+      // image_data: new ImageData(32, 32),
       // {
       //   width: 32,
       //   height: 32,
@@ -44,17 +44,16 @@ export default {
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  /* color: #2c3e50; */
-  margin-top: 60px;
+  color: #2c3e50;
+  margin-top: 60px; */
   display: flex;
-  background-color: yellow;
 }
 
-/* debug */
+/* keep debug classes global */
 .container {
   border-style: solid;
   border-width: 1px;
