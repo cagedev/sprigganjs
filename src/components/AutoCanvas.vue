@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    AutoCanvas<br />
     <canvas :width="width" :height="height" ref="autocanvas" />
   </div>
 </template>

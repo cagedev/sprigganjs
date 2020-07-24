@@ -27,7 +27,7 @@ import VSwatches from "vue-swatches";
 import "vue-swatches/dist/vue-swatches.css";
 
 export default {
-  name: "Palette",
+  name: "PalettePanel",
   components: {
     VSwatches,
   },
