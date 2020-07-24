@@ -8,12 +8,8 @@
       @contextmenu.capture.prevent
       ref="pixelcanvas"
     />
-    <!-- @input="setFgColor($event.payload[0])" -->
   </div>
 </template>
-
-<!-- @mousedown.left="paint($event, fgColor)"
-      @mousedown.right="paint($event, bgColor)" -->
 
 <script>
 export default {
@@ -23,37 +19,27 @@ export default {
     spacing: { type: Number, default: 1 },
     size_x: { type: Number, required: true },
     size_y: { type: Number, required: true },
-    fgColor: {
-      type: String,
-      default: "red",
-    },
-    bgColor: {
-      type: String,
-      default: "black",
-    },
-    load_mask: Boolean,
+    // fgColor: {
+    //   type: String,
+    //   default: "red",
+    // },
+    // bgColor: {
+    //   type: String,
+    //   default: "black",
+    // },
+    // load_mask: Boolean,
     pixels: { type: Array, required: true },
   },
   watch: {
     pixels: {
-      handler: function() {
-        console.log(this.pixels.length);
+      handler: function () {
         this.drawData();
       },
     },
   },
   methods: {
-    // paint(e, c) {
-    //   let cx = e.offsetX;
-    //   let cy = e.offsetY;
-    //   let rx = Math.floor(cx / this.scale);
-    //   let ry = Math.floor(cy / this.scale);
-    //   // this.setPixel(rx, ry, c);
-    //   // console.log("setPixel(" + rx + "," + ry + "," + c + ")");
-    //   this.drawPixel(rx, ry, c);
-    // },
     drawData() {
-      console.log("drawData() for " + this.pixels);
+      // console.log("drawData() for " + this.pixels);
       for (let j = 0; j < this.size_y; j++) {
         for (let i = 0; i < this.size_x; i++) {
           let pindex = (j * this.size_x + i) * 4;

@@ -8,7 +8,13 @@
       :size_y="height"
       :pixels="pixels"
     />
-    <button @click="debug">debug</button>
+    <ClickLayer
+      :scale="10"
+      :size_x="width"
+      :size_y="height"
+      @clicked-pixel="handleClickedPixel"
+    />
+    <ButtonPanel @click-debug="debug" />
   </div>
 </template>
 
@@ -16,6 +22,8 @@
 import AutoImage from "./AutoImage.vue";
 import AutoCanvas from "./AutoCanvas.vue";
 import PixelCanvas from "./PixelCanvas.vue";
+import ClickLayer from "./ClickLayer.vue";
+import ButtonPanel from "./ButtonPanel.vue";
 
 export default {
   name: "SprigganPanel",
@@ -23,6 +31,8 @@ export default {
     AutoImage,
     AutoCanvas,
     PixelCanvas,
+    ClickLayer,
+    ButtonPanel,
   },
   props: {
     width: { type: Number, required: true },
@@ -32,6 +42,10 @@ export default {
     return {
       pixels: [],
       dbg_index: 0,
+      fgColor: [0, 0, 255, 255],
+      bgColor: [255, 128, 0, 255],
+      // fgColor: "rgb(0, 0, 255)",
+      // bgColor: "#FF8000",
     };
   },
   computed: {
@@ -69,6 +83,11 @@ export default {
       this.$set(this.pixels, (this.width * y + x) * 4 + 1, g);
       this.$set(this.pixels, (this.width * y + x) * 4 + 2, b);
       this.$set(this.pixels, (this.width * y + x) * 4 + 3, a);
+    },
+    handleClickedPixel: function (x, y, mb) {
+      let colors = [this.bgColor, this.fgColor];
+      this.setpixel(x, y, ...colors[mb]);
+      // console.log("x:", x, " y:", y, " c:", ...colors[mb]);
     },
 
     // make the pixel at `index` yellow
