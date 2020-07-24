@@ -8,20 +8,20 @@
 export default {
   name: "AutoCanvas",
   props: {
-    pixels: Array,
-    width: Number,
-    height: Number,
+    pixels: { type: Array, required: true },
+    width: { type: Number, required: true },
+    height: { type: Number, required: true },
   },
   watch: {
     pixels: {
-      handler: function() {
+      handler: function () {
         this.render();
       },
     },
   },
   methods: {
     render() {
-      let ctx = this.$refs['autocanvas'].getContext("2d");
+      let ctx = this.$refs["autocanvas"].getContext("2d");
       let img_data = new ImageData(
         new Uint8ClampedArray(this.pixels),
         this.width,
