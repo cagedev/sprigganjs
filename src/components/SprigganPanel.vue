@@ -1,8 +1,13 @@
 <template>
   <div class="container">
-    PixelCanvas ThumbnailCanvas
     <AutoImage :dataURL="dataURL" />
-    <AutoCanvas :width="width" :height="height" :pixels="pixels"/>
+    <AutoCanvas :width="width" :height="height" :pixels="pixels" />
+    <PixelCanvas
+      :scale="10"
+      :size_x="width"
+      :size_y="height"
+      :pixels="pixels"
+    />
     <button @click="debug">debug</button>
   </div>
 </template>
@@ -10,12 +15,14 @@
 <script>
 import AutoImage from "./AutoImage.vue";
 import AutoCanvas from "./AutoCanvas.vue";
+import PixelCanvas from "./PixelCanvas.vue";
 
 export default {
   name: "SprigganPanel",
   components: {
     AutoImage,
     AutoCanvas,
+    PixelCanvas,
   },
   props: {
     width: { type: Number, required: true },

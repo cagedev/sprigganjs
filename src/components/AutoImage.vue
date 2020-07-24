@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    AutoImage<br />
     <img :src="dataURL" />
   </div>
 </template>

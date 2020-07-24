@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    AutoCanvas<br />
     <canvas :width="width" :height="height" ref="autocanvas" />
   </div>
 </template>
@@ -14,14 +15,14 @@ export default {
   },
   watch: {
     pixels: {
-      handler: function() {
+      handler: function () {
         this.render();
       },
     },
   },
   methods: {
     render() {
-      let ctx = this.$refs['autocanvas'].getContext("2d");
+      let ctx = this.$refs["autocanvas"].getContext("2d");
       let img_data = new ImageData(
         new Uint8ClampedArray(this.pixels),
         this.width,
